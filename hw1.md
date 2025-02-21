@@ -1,7 +1,7 @@
 # Инструкция по развертыванию HDFS на 4 виртуальных машинах
 
 ## Обозначения узлов
-| Роль             | Имя узла       | IP-адрес (пример) |
+| Роль             | Имя узла       | IP-адрес           |
 |-------------------|----------------|-------------------|
 | Jump Node        | `team-8-jn`    | `ip_jn`           |
 | NameNode         | `team-8-nn`    | `ip_nn`           |
@@ -11,10 +11,13 @@
 ---
 
 ## 1. Настройка SSH и hosts-файлов
+### На локальной машине 
+```bash
+ssh team@ip_jn
+```
 
 ### На Jump Node (`ip_jn`)
 ```bash
-ssh team@ip_jn
 ssh-keygen -t ed25519
 cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
 
@@ -32,6 +35,10 @@ sudo vim /etc/hosts
 ip_nn team-8-nn
 ip_dn-00 team-8-dn-00
 ip_dn-01 team-8-dn-01
+```
+# Создание пользователя 
+```bash
+sudo adduser hadoop 
 ```
 
 ### На NameNode (`ip_nn`)
@@ -97,6 +104,9 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 Применить изменения:
 ```bash
 source ~/.profile
+scp .profile team-8-nn:/home/hadoop
+scp .profile team-8-dn-00:/home/hadoop
+scp .profile team-8-dn-01:/home/hadoop
 ```
 
 ---
@@ -104,12 +114,12 @@ source ~/.profile
 ## 3. Конфигурация Hadoop
 
 ### Основные файлы конфигурации
-1. `hadoop-env.sh`:
+1. В `~/hadoop-3.4.0/etc/hadoop/hadoop-env.sh` добавляем:
    ```bash
    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
    ```
 
-2. `core-site.xml`:
+2. В `core-site.xml` добавляем:
    ```xml
    <configuration>
      <property>
@@ -119,7 +129,7 @@ source ~/.profile
    </configuration>
    ```
 
-3. `hdfs-site.xml`:
+3. В `hdfs-site.xml` добавляем:
    ```xml
    <configuration>
      <property>
@@ -129,7 +139,7 @@ source ~/.profile
    </configuration>
    ```
 
-4. `workers`:
+4. В `workers` добавляем:
    ```
    team-8-nn
    team-8-dn-00
