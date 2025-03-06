@@ -6,7 +6,7 @@
 
 ### 1.1. Установка PostgreSQL на NameNode
 ```bash
-ssh team@IP_JUMP_NODE
+ssh team@ip_jn
 ssh team-8-nn
 sudo apt update
 sudo apt install postgresql
