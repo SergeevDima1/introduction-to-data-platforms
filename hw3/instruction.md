@@ -41,8 +41,8 @@ sudo vim /etc/postgresql/16/main/pg_hba.conf
 ```
 Добавить в конец файла:
 ```ini
-host    metastore    hive    IP_NN/32    password
-host    metastore    hive    IP_JN/32    password
+host    metastore    hive    ip_nn/32    password
+host    metastore    hive    ip_nn/32    password
 ```
 
 Перезапустите PostgreSQL:
