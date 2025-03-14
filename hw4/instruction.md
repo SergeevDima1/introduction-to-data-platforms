@@ -3,10 +3,10 @@
 ## 0. Работа с данными
 
 ### Загрузка данных в HDFS
+data.csv должен быть загружен на hdfs предварительно (например на локальной машине выполнить scp data.csv team@jump_host:/tmp/)
 ```bash
-hdfs dfs -put data.csv /input
+hdfs dfs -put /tmp/data.csv /input
 ```
-data.csv должен быть загружен на hdfs предварительно
 ---
 
 ## 1. Подготовка окружения
