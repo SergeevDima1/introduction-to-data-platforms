@@ -119,7 +119,7 @@ reader = FileDFReader(
     source_path="/input"
 )
 
-df = reader.run(["titanic.csv"])
+df = reader.run(["data.csv"])
 print(f"Total records: {df.count()}")
 
 # Запись в Hive
