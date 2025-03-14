@@ -132,4 +132,25 @@ writer = DBWriter(
 writer.run(df)
 ```
 
+### Пример партиционирование данных при сохранении
+```python
+transformed_df = df \
+    .withColumn("SurvivedLabel", F.when(F.col("Survived") == 1, "Yes").otherwise("No")) \
+    .groupBy("Pclass", "Sex") \
+    .agg(
+        F.count("*").alias("TotalPassengers"),
+        F.round(F.avg("Age"), 2).alias("AvgAge"),
+        F.sum("Survived").alias("Survivors")
+    ) \
+    .filter(F.col("AvgAge") > 18) \
+    .orderBy("Pclass", ascending=False)
+
+transformed_df.show(5)
+
+transformed_df.write \
+    .partitionBy("Pclass") \
+    .mode("overwrite") \
+    .option("path", "hdfs://team-8-nn:9000/user/hive/warehouse/spark_partitions") \
+    .saveAsTable("test.spark_partitions")
+```
 ---
