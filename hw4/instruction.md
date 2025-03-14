@@ -3,7 +3,12 @@
 ## 0. Работа с данными
 
 ### Загрузка данных в HDFS
-data.csv должен быть загружен на hdfs предварительно (например на локальной машине выполнить scp data.csv team@jump_host:/tmp/)
+data.csv должен быть загружен на hdfs предварительно 
+На локальной машине выполнить 
+```bash
+scp data.csv team@jump_host:/tmp/
+```
+От пользователя hadoop на Jump Node выполнить
 ```bash
 hdfs dfs -put /tmp/data.csv /input
 ```
